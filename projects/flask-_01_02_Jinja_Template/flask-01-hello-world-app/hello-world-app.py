@@ -24,4 +24,4 @@ def fourth(id):
 if __name__ == '__main__':
 
      #app.run(debug=True) #hatalari görmek istiyorsak debug i  aktif birakacaz
-      app.run(host= '0.0.0.0', port=80) #farkli port istersek onu yazabilirz port bildirmessen 500 portunda calisir
+      app.run(host= '0.0.0.0/0', port=80) #farkli port istersek onu yazabilirz port bildirmessen 500 portunda calisir
