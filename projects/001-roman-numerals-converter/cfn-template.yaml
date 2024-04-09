@@ -46,11 +46,11 @@ Resources: #burda secr grupe ve instance olcak ama user data önemli instance da
         dnf install python3-pip -y
         pip3 install flask
         dnf install git -y
-        FOLDER="https://raw.githubusercontent.com/Aynuur/projects/master/001-roman-numerals-converter/templates"
+        FOLDER="https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/templates"
         cd /home/ec2-user
         wget -P templates ${FOLDER}/index.html
         wget -P templates ${FOLDER}/result.html
-        wget https://raw.githubusercontent.com/Aynuur/projects/master/001-roman-numerals-converter/roman-numerals-converter-app.py
+        wget https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/roman-numerals-converter-app.py
         python3 roman-numerals-converter-app.py  
      
 Outputs: 
