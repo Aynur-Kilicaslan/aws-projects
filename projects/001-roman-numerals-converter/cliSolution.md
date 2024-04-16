@@ -8,7 +8,7 @@ aws --version
 
 - Write your credentials using this command
 ```bash
-aws configure
+aws configure #cli kullanabilmek icin kendimizi aws e tanitmak icin
 ```
 
 - or Assign a role with AdministratorFullAccess Policy. It is best practice to use IAM role rather than using AWS credentials
@@ -95,7 +95,7 @@ aws ec2 run-instances \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]'\
     --user-data file:///home/ec2-user/userdata.sh
 ```
-
+#eger instance olusursa public ip yi al bak uygulama calisiyor mu
 - To see the each instances Ip we'll use describe instance CLI command
 ```bash
 aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers"
@@ -104,15 +104,16 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers"
 - You can run the query to find Public IP and instance_id of instances:
 ```bash
 aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers" --query 'Reservations[].Instances[].PublicIpAddress[]'
-
+#insatance id i getirdi
 aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers" --query 'Reservations[].Instances[].InstanceId[]'
 ```
 
 - To delete instances
 ```bash 
+aws ec2 terminate-instances --instance-ids #buraya yukarda gelen instance id yi yaz termnt et
 aws ec2 terminate-instances --instance-ids <We have already learned this id with query on above>
 ```
 - To delete security groups
 ```bash
-aws ec2 delete-security-group --group-name okt_roman_numbers_sec_grp1
+aws ec2 delete-security-group --group-name aynur_roman_numbers_sec_grp1
 ```
