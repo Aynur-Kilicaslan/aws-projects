@@ -50,9 +50,9 @@ Input       Output
 9           IX
 58          LVIII
 1994        MCMXCIV
--8          Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively."
-4500        Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively."
-Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively."
+-8          Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively." # negatifse 
+4500        Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively." # 3999 dan buyukse
+Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, inclusively." # yazi girdinse uyari vericek
 ```
    
 - As a DevOps, developer has given you app and template folder, you are requested to deploy your web environment using Python's Flask framework.
@@ -67,15 +67,15 @@ Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, i
 
    - EC2 Instance type can be configured as `t2.micro`.
 
-   - Latest AWS Linux AMI should be used for template and Image Id must be referred to `SSM Parameter`
+   - Latest AWS Linux AMI should be used for template and Image Id must be referred to `SSM Parameter` # en guncel image cekilsin
 
-   - Instance launched by Cloudformation should be tagged `Web Server of StackName` 
+   - Instance launched by Cloudformation should be tagged `Web Server of StackName` instance lar ayaga kalktiginda stack ismini alarak kalkacak
 
-   - The Web Application should be accessible via web browser and terminal from anywhere.
+   - The Web Application should be accessible via web browser and terminal from anywhere. #uygulamamiz heryerden erisilebilir olacak
 
-   - The Application files should be downloaded from Github repo and deployed on EC2 Instance using user data script within cloudformation template. 
+   - The Application files should be downloaded from Github repo and deployed on EC2 Instance using user data script within cloudformation template. #dosyalari github repodan alacagiz
 
-   - Roman Numerals Converter Application Website URL should be given as output by Cloudformation Service, after the stack created.
+   - Roman Numerals Converter Application Website URL should be given as output by Cloudformation Service, after the stack created. #output da url adresini koyacagiz
 
 - Lastly, try to deploy same infrastructure using AWS `CLI commands` to showcase your project. 
 

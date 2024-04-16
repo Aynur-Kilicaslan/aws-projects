@@ -4,11 +4,11 @@ Description: |
   This template creates Python Flask Web Application on Amazon Linux 2023
   EC2 Instance with custom security group allowing http connections on port 80 and SSH connection on port 22.
   Roman Numerals Converter Application is downloaded from Github repository, then installed on Flask.
-Parameters:
-  KeyName:
+Parameters: #keypair type key name sec
+  KeyName: 
     Description: Enter your keyname
     Type: AWS::EC2::KeyPair::KeyName
-
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
   LatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64'        
@@ -19,7 +19,7 @@ Resources: #burda secr grupe ve instance olcak ama user data önemli instance da
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable http and ssh (80 and 22 port) # Required
-      SecurityGroupIngress: 
+      SecurityGroupIngress: #gelen trafige izin vercez
          -  IpProtocol: tcp
             FromPort: 22 
             ToPort: 22
@@ -34,11 +34,11 @@ Resources: #burda secr grupe ve instance olcak ama user data önemli instance da
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      SecurityGroupIds: 
+      SecurityGroupIds: #yukarda secr grupu belirttigimiz icin gerpid yi kullandik digeri gitti. doc bak aws ec2 instance i tikla yaml a bak sec group - ile yazilio,sende - koy ve sec grupu tikla 
         - !Ref ConverterSecGrp
       Tags: 
         - Key: Name
-          Value: !Sub Web Server of ${AWS::StackName} #biz stac olustururken stack ismini alip buraya yazacak,sub sayesinde
+          Value: !Sub Web Server of ${AWS::StackName} #biz stac olustururken stack ismini alip buraya yazacak,sub sayesinde,Template reference in altinda intr func un altinda pseudo parametr a bak,stack name yazilisi
       UserData: !Base64 | #log seklinde tutulsun diye | bunu koydu
         #! /bin/bash
         dnf update -y
@@ -46,18 +46,18 @@ Resources: #burda secr grupe ve instance olcak ama user data önemli instance da
         dnf install python3-pip -y
         pip3 install flask
         dnf install git -y
-        FOLDER="https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/templates"
+        FOLDER="https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/templates" #github tan index raw i al
         cd /home/ec2-user
         wget -P templates ${FOLDER}/index.html
         wget -P templates ${FOLDER}/result.html
-        wget https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/roman-numerals-converter-app.py
+        wget https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/roman-numerals-converter-app.py #app.py nin rawini al
         python3 roman-numerals-converter-app.py  
-     
+    # stack olustuktan sonra loadbalancer a gidip dns adresini kopyalayip bakmak yerine aws bize direk cikti olarak görmek istedigimiz seyleri verecek burasi sayesinde 
 Outputs: 
   WebsiteURL:
-    Value: !Sub
+    Value: !Sub #instance olustuktan sonra islem yapacak
       - http://${UrlName}
-      - UrlName: !GetAtt ConverterHost.PublicDnsName
+      - UrlName: !GetAtt ConverterHost.PublicDnsName #instance tan publc dns name i cek demis oluyoruz,yukardan aldk instance ismini al
     Description: Roman Numerals Converter Application URL
 
 
