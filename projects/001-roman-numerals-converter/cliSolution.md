@@ -17,16 +17,16 @@ aws configure
 
 ```bash
 aws ec2 create-security-group \
-    --group-name okt_roman_numbers_sec_grp\
+    --group-name aynur_roman_numbers_sec_grp\
     --description "This Sec Group is to allow ssh and http from anywhere"
 ```
 
 - We can check the security Group with these commands
-```bash
+```bash # burda sec grubun bilgilerini getiriyoruz
 aws ec2 describe-security-groups --group-names aynur_roman_numbers_sec_grp
 ```
 
-2. Create Rules of security Group
+2. Create Rules of security Group #kurallarini belirliyelim
 
 ```bash
 aws ec2 authorize-security-group-ingress \
@@ -41,23 +41,19 @@ aws ec2 authorize-security-group-ingress \
     --port 80 \
     --cidr 0.0.0.0/0
 
-aws ec2 authorize-security-group-ingress \
-    --group-name roman_numbers_sec_grp1 \
-    --protocol tcp \
-    --port 8080 \
-    --cidr 0.0.0.0/0
+
 ```
 
 3. After creating security Groups, We'll create our EC2 which has latest AMI id. to do this, we need to find out latest AMI with AWS system manager (ssm) command
 
 - This command is to run querry to get latest AMI ID
-```bash
+```bash # guncel ami numarasini cekelim
 aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 --query 'Parameters[0].[Value]' --output text
 ```
 
 - We can assign this latest AMI id output to the LATEST_AMI environmental variable and use in our CLI command 
 
-```
+``` #guncel olani latest e atadik
 (LATEST_AMI=xxxxxxxxxxxxxxxx)
 ```
 - or we can directly fetch the last version via  using "resolve:ssm". We keep going with using "resolve:ssm" option. 
@@ -65,18 +61,20 @@ aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-k
 - in home directory of Ec2 create a userdata.sh file with following
 
 ```
-#! /bin/bash
+touch userdata.sh
+nano userdata.sh
 
-yum update -y
-yum install python3 -y
-yum install python3-pip -y
+#! /bin/bash
+dnf update -y
+dnf install python3 -y
+dnf install python3-pip -y
 pip3 install flask
-yum install git -y
-FOLDER="https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventor/master/templates"
+dnf install git -y
+FOLDER="https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/templates" #github tan index raw i al
 cd /home/ec2-user
 wget -P templates ${FOLDER}/index.html
 wget -P templates ${FOLDER}/result.html
-wget https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventor/master/roman-numerals-converter-app.py
+wget https://raw.githubusercontent.com/Aynuur/aws-projects/master/projects/001-roman-numerals-converter/roman-numerals-converter-app.py #app.py nin rawini al
 python3 roman-numerals-converter-app.py
 ```
 - As for the student who use his/her own local terminal, they need to show the absulete path of userdata.sh file
@@ -84,16 +82,16 @@ python3 roman-numerals-converter-app.py
 - Now we can run the instance with CLI command. (Do not forget to create userdata.sh under "/home/ec2-user/" folder before run this command)
 
 ```bash
-aws ec2 run-instances --image-id $LATEST_AMI --count 1 --instance-type t2.micro --key-name ottoaws9 --security-groups roman_numbers_sec_grp1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///Users/ODG/Desktop/git_dir/osvaldo-cw/porfolio_lesson_plan/week_6/CLI_solution/userdata.sh
+aws ec2 run-instances --image-id ami-051f8a213df8bc089 --count 1 --instance-type t2.micro --key-name ottoaws9 --security-groups roman_numbers_sec_grp1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///Users/ODG/Desktop/git_dir/osvaldo-cw/porfolio_lesson_plan/week_6/CLI_solution/userdata.sh
 
 or
 
 aws ec2 run-instances \
-    --image-id resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 \
+    --image-id ami-051f8a213df8bc089 \
     --count 1 \
     --instance-type t2.micro \
-    --key-name ottoaws9 \
-    --security-groups roman_numbers_sec_grp1 \
+    --key-name aynur-new-key \
+    --security-groups aynur_roman_numbers_sec_grp \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]'\
     --user-data file:///home/ec2-user/userdata.sh
 ```
