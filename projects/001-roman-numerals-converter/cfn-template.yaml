@@ -34,10 +34,10 @@ Resources: #burda secr grupe ve instance olcak ama user data önemli instance da
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      SecurityGroupIds: #yukarda secr grupu belirttigimiz icin gerpid yi kullandik digeri gitti. doc bak aws ec2 instance i tikla yaml a bak sec group - ile yazilio,sende - koy ve sec grupu tikla 
+      SecurityGroupIds: #yukarda secr grupu belirttigimiz icin grpid yi kullandik digeri gitti. doc bak aws ec2 instance i tikla yaml a bak sec group - ile yazilio,sende - koy ve sec grupu tikla 
         - !Ref ConverterSecGrp
       Tags: 
-        - Key: Name
+        - Key: Name #instance ismini olustururken alip buraya yazacak
           Value: !Sub Web Server of ${AWS::StackName} #biz stac olustururken stack ismini alip buraya yazacak,sub sayesinde,Template reference in altinda intr func un altinda pseudo parametr a bak,stack name yazilisi
       UserData: !Base64 | #log seklinde tutulsun diye | bunu koydu
         #! /bin/bash

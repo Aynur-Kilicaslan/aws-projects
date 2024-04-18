@@ -59,11 +59,11 @@ Ten         Warning with "Not Valid! Please enter a number between 1 and 3999, i
 
 - You are requested to push your program to the project repository on the Github and deploy your solution in the development environment on AWS EC2 Instance using AWS Cloudformation Service to showcase your project. In the development environment, you'll configure your Cloudformation template using the followings,
 
-   - The application stack should be created with new AWS resources. 
+   - The application stack should be created with new AWS resources. #kaynak ihtiyacini belirle 
 
    - The application stack should take the name of your `Key Pair as a parameter` from the user;
-   
-   - The application should run on `Amazon Linux 2023 EC2` Instance
+   #keypairi parametre olarak gir,herkes kendininkini girebilsin
+   - The application should run on `Amazon Linux 2023 EC2` Instance 
 
    - EC2 Instance type can be configured as `t2.micro`.
 

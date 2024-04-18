@@ -1,0 +1,8 @@
+## SQLite
+
+SQLite tek kisi kullaniyor kurulumu programlarla kullanimi daha kolay
+kapasitesi sinirli,buyuk programlar icin kullanilmaz
+
+
+
+birden cok kisinin ulasmasi gerecekse MySql tercih edilebilir,

@@ -17,26 +17,26 @@ aws configure #cli kullanabilmek icin kendimizi aws e tanitmak icin
 
 ```bash
 aws ec2 create-security-group \
-    --group-name aynur_roman_numbers_sec_grp\
+    --group-name aynur1_roman_numbers_sec_grp\
     --description "This Sec Group is to allow ssh and http from anywhere"
 ```
 
 - We can check the security Group with these commands
 ```bash # burda sec grubun bilgilerini getiriyoruz
-aws ec2 describe-security-groups --group-names aynur_roman_numbers_sec_grp
+aws ec2 describe-security-groups --group-names aynur1_roman_numbers_sec_grp
 ```
 
 2. Create Rules of security Group #kurallarini belirliyelim
 
 ```bash
 aws ec2 authorize-security-group-ingress \
-    --group-name aynur_roman_numbers_sec_grp \
+    --group-name aynur1_roman_numbers_sec_grp \
     --protocol tcp \
     --port 22 \
     --cidr 0.0.0.0/0
 
 aws ec2 authorize-security-group-ingress \
-    --group-name aynur_roman_numbers_sec_grp \
+    --group-name aynur1_roman_numbers_sec_grp \
     --protocol tcp \
     --port 80 \
     --cidr 0.0.0.0/0
@@ -91,7 +91,7 @@ aws ec2 run-instances \
     --count 1 \
     --instance-type t2.micro \
     --key-name aynur-new-key \
-    --security-groups aynur_roman_numbers_sec_grp \
+    --security-groups aynur1_roman_numbers_sec_grp \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]'\
     --user-data file:///home/ec2-user/userdata.sh
 ```
@@ -115,5 +115,5 @@ aws ec2 terminate-instances --instance-ids <We have already learned this id with
 ```
 - To delete security groups
 ```bash
-aws ec2 delete-security-group --group-name aynur_roman_numbers_sec_grp1
+aws ec2 delete-security-group --group-name aynur1_roman_numbers_sec_grp
 ```
